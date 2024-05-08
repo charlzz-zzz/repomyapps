@@ -9,38 +9,40 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Nombres LGBT+',
+      title: 'Espectro LGBT+ por nombre',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LGBTNamesScreen(),
+      home: LGBTSpectrumScreen(),
     );
   }
 }
 
-class LGBTNamesScreen extends StatefulWidget {
+class LGBTSpectrumScreen extends StatefulWidget {
   @override
-  _LGBTNamesScreenState createState() => _LGBTNamesScreenState();
+  _LGBTSpectrumScreenState createState() => _LGBTSpectrumScreenState();
 }
 
-class _LGBTNamesScreenState extends State<LGBTNamesScreen> {
-  final List<String> lgbtNames = [
-    'Gay',
-    'Lesbiana',
-    'Bisexual',
-    'Transgénero',
-    'No binario',
-    'Queer',
-    // Agrega más nombres aquí
-  ];
+class _LGBTSpectrumScreenState extends State<LGBTSpectrumScreen> {
+  final TextEditingController _nameController = TextEditingController();
+  String _spectrum = '';
 
-  String _randomName = '';
+  void _generateSpectrum() {
+    final String name = _nameController.text.trim();
+    final List<String> spectrums = [
+      'Gay',
+      'Lesbiana',
+      'Bisexual',
+      'Transgénero',
+      'No binario',
+      'Queer',
+      // Agrega más espectros aquí
+    ];
 
-  void _generateRandomName() {
-    final Random random = Random();
-    final int randomNumber = random.nextInt(lgbtNames.length);
+    final Random random = Random(name.hashCode);
+    final int randomNumber = random.nextInt(spectrums.length);
     setState(() {
-      _randomName = lgbtNames[randomNumber];
+      _spectrum = spectrums[randomNumber];
     });
   }
 
@@ -48,11 +50,36 @@ class _LGBTNamesScreenState extends State<LGBTNamesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nombres LGBT+'),
+        title: Text('Espectro LGBT+ por nombre'),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-   
+            TextField(
+              controller: _nameController,
+              decoration: InputDecoration(
+                labelText: 'Ingresa tu nombre',
+              ),
+            ),
+            SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () {
+                _generateSpectrum();
+              },
+              child: Text('Generar espectro LGBT+'),
+            ),
+            SizedBox(height: 20.0),
+            _spectrum.isNotEmpty
+                ? Text(
+                    'Tu espectro LGBT+ es: $_spectrum',
+                    style: TextStyle(fontSize: 20.0),
+                  )
+                : SizedBox(),
+          ],
+        ),
+      ),
+    );
+  }
+}
