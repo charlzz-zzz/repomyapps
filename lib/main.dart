@@ -9,40 +9,45 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Espectro LGBT+ por nombre',
+      title: 'Signo Zodiacal del Amor',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LGBTSpectrumScreen(),
+      home: ZodiacLoveScreen(),
     );
   }
 }
 
-class LGBTSpectrumScreen extends StatefulWidget {
+class ZodiacLoveScreen extends StatefulWidget {
   @override
-  _LGBTSpectrumScreenState createState() => _LGBTSpectrumScreenState();
+  _ZodiacLoveScreenState createState() => _ZodiacLoveScreenState();
 }
 
-class _LGBTSpectrumScreenState extends State<LGBTSpectrumScreen> {
+class _ZodiacLoveScreenState extends State<ZodiacLoveScreen> {
   final TextEditingController _nameController = TextEditingController();
-  String _spectrum = '';
+  String _zodiacSign = '';
 
-  void _generateSpectrum() {
+  void _generateZodiacSign() {
     final String name = _nameController.text.trim();
-    final List<String> spectrums = [
-      'Gay',
-      'Lesbiana',
-      'Bisexual',
-      'Transgénero',
-      'No binario',
-      'Queer',
-      // Agrega más espectros aquí
+    final List<String> zodiacSigns = [
+      'Aries',
+      'Tauro',
+      'Géminis',
+      'Cáncer',
+      'Leo',
+      'Virgo',
+      'Libra',
+      'Escorpio',
+      'Sagitario',
+      'Capricornio',
+      'Acuario',
+      'Piscis',
     ];
 
     final Random random = Random(name.hashCode);
-    final int randomNumber = random.nextInt(spectrums.length);
+    final int randomNumber = random.nextInt(zodiacSigns.length);
     setState(() {
-      _spectrum = spectrums[randomNumber];
+      _zodiacSign = zodiacSigns[randomNumber];
     });
   }
 
@@ -50,7 +55,7 @@ class _LGBTSpectrumScreenState extends State<LGBTSpectrumScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Espectro LGBT+ por nombre'),
+        title: Text('Signo Zodiacal del Amor'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -66,14 +71,14 @@ class _LGBTSpectrumScreenState extends State<LGBTSpectrumScreen> {
             SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
-                _generateSpectrum();
+                _generateZodiacSign();
               },
-              child: Text('Generar espectro LGBT+'),
+              child: Text('Descubrir tu signo zodiacal del amor'),
             ),
             SizedBox(height: 20.0),
-            _spectrum.isNotEmpty
+            _zodiacSign.isNotEmpty
                 ? Text(
-                    'Tu espectro LGBT+ es: $_spectrum',
+                    'Tu signo zodiacal del amor es: $_zodiacSign',
                     style: TextStyle(fontSize: 20.0),
                   )
                 : SizedBox(),
